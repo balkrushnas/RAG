@@ -15,9 +15,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Echo Sonar URL to debug
-        run: echo ${{ secrets.SONAR_HOST_URL }}
+      - name: Echo Sonar URL for debugging
+        run: echo "SonarQube URL: http://192.168.6.14:9000/"
 
       - name: Run curl command to check SonarQube connection
         run: |
-          curl -v ${{ secrets.SONAR_HOST_URL }}/
+          curl -v --max-time 300 http://192.168.6.14:9000/
+        
+      - name: Run SonarQube scan action
+        uses: sonarsource/sonarqube-scan-action@v3
+        with:
+          projectBaseDir: .
+          args: "-X -Dsonar.web.timeout=600"  # Enable debug logging and increase timeout
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
