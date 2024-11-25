@@ -16,7 +16,12 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for better relevancy of analysis
 
-      # Step 2: Run SonarQube scan action
+      # Step 2: Test connection to SonarQube server (optional but useful for debugging)
+      - name: Test SonarQube server access
+        run: |
+          curl -v ${SONAR_HOST_URL}/
+
+      # Step 3: Run SonarQube scan action
       - uses: sonarsource/sonarqube-scan-action@v3
         with:
           projectBaseDir: .
