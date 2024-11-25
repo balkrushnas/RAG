@@ -5,22 +5,27 @@ on:
     branches:
       - main
 
-
 jobs:
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
-    
+
     steps:
+      # Step 1: Checkout the code
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0  # Shallow clones should be disabled for better relevancy of analysis
+
+      # Step 2: Run SonarQube scan action
       - uses: sonarsource/sonarqube-scan-action@v3
+        with:
+          projectBaseDir: .
+          args: "-X -Dsonar.web.timeout=600"  # Enable debug logging and increase timeout
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      # If you wish to fail your job when the Quality Gate is red, uncomment the
-      # following lines. This would typically be used to fail a deployment.
+
+      # Optional: Fail the job if Quality Gate is red (uncomment if required)
       # - uses: sonarsource/sonarqube-quality-gate-action@master
       #   timeout-minutes: 5
       #   env:
