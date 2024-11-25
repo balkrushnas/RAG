@@ -1,35 +1,16 @@
-name: Build and Analyze
+name: Test Workflow
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:  # Allows manual triggering
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the code
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Echo Sonar URL for debugging
-        run: echo "SonarQube URL: http://192.168.6.14:9000/"
-
-      - name: Ping SonarQube server for connectivity
-        run: ping -c 4 192.168.6.14
-
-      - name: Run curl command to check SonarQube connection
-        run: |
-          curl -v --max-time 600 http://192.168.6.14:9000/
-
-      - name: Run SonarQube scan action
-        uses: sonarsource/sonarqube-scan-action@v3
-        with:
-          projectBaseDir: .
-          args: "-X -Dsonar.web.timeout=600"
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Print Hello
+        run: echo "Hello, GitHub Actions!"
