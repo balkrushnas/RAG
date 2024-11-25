@@ -19,12 +19,12 @@ jobs:
       - name: Set up Node.js (for JS/TS analysis)
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Adjust the Node.js version as per your requirement
+          node-version: '22'  # Adjust the Node.js version as per your requirement
 
       - uses: sonarsource/sonarqube-scan-action@v3
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{sqp_4ab1ba5f2113b279779b49a1b4ce649603ba9f03}}
+          SONAR_HOST_URL: ${{http://192.168.6.14:9000/}}
 
       # Optional: Fail job if Quality Gate is red (uncomment if needed)
       # - uses: sonarsource/sonarqube-quality-gate-action@master
