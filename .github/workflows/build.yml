@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   build:
@@ -29,6 +30,6 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@v3
         with:
           projectBaseDir: .
-          args: "-X -Dsonar.web.timeout=600"  # Enable debug logging and increase timeout
+          args: "-X -Dsonar.web.timeout=600"
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
