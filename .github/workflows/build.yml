@@ -18,10 +18,13 @@ jobs:
       - name: Echo Sonar URL for debugging
         run: echo "SonarQube URL: http://192.168.6.14:9000/"
 
+      - name: Ping SonarQube server for connectivity
+        run: ping -c 4 192.168.6.14
+
       - name: Run curl command to check SonarQube connection
         run: |
-          curl -v --max-time 300 http://192.168.6.14:9000/
-        
+          curl -v --max-time 600 http://192.168.6.14:9000/
+
       - name: Run SonarQube scan action
         uses: sonarsource/sonarqube-scan-action@v3
         with:
